@@ -6,9 +6,9 @@ import gui.Visualizer;
 
 public class BubbleSorter extends Sorter {
 
-	private int i;
+	private int i = 0;
 	
-	private int j;
+	private int j = 0;
 	
 	public BubbleSorter(Visualizer theVisualizer) {
 		super(theVisualizer);
@@ -28,13 +28,16 @@ public class BubbleSorter extends Sorter {
     	}
 		myVisualizer.showSelectedValue(j);
 		if (i == myVisualizer.getMyBars().size() - 1) {
-			myVisualizer.stop();
+			isSorted = true;
+			myVisualizer.sortingDone();
 		}
 	}
 	
+	@Override
 	public void reset() {
 		i = 0;
 		j = 0;
+		isSorted = false;
 		myVisualizer.showSelectedValue(j);
 	}
 	

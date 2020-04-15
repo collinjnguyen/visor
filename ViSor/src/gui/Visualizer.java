@@ -23,7 +23,7 @@ public class Visualizer extends JPanel {
 	
 	private final Timer myTimer;
 	
-	private int myTimerDelay = 2;
+	private int myTimerDelay = 0;
 	
 	private final int myNumberOfValues = 200;
 	
@@ -34,6 +34,10 @@ public class Visualizer extends JPanel {
 	private int myMaxSpeed = 10;
 	
 	private boolean isRunning = false;
+	
+	private Timer myTimerForSortedAnimation;
+	
+	private int myIntegerForSortedAnimation;
 		
 	public Visualizer() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -43,7 +47,29 @@ public class Visualizer extends JPanel {
 		makeBars();
 		update();
 		
-		myTimer = new Timer(myTimerDelay, new TimeListener());
+		myTimer = new Timer(myTimerDelay, new ActionListener()  {
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+            	mySorter.sort();
+            	myComparisons++;
+            	update();
+                revalidate();
+            }
+        });
+		
+		myTimerForSortedAnimation = new Timer(5, new ActionListener()  {
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+            	myBars.get(myIntegerForSortedAnimation).setSelected(true);
+            	myIntegerForSortedAnimation++;
+            	update();
+                revalidate();
+            	if (myIntegerForSortedAnimation == myBars.size()) {
+            		myTimerForSortedAnimation.stop();
+            	}
+            }
+        });
+		
 		mySorter = new BubbleSorter(this);
 	}
 	
@@ -88,7 +114,7 @@ public class Visualizer extends JPanel {
 	}
 	
 	public void showSelectedValue(final int theCurrentBar) {
-		for(Bar b : myBars) {
+		for (Bar b : myBars) {
 			b.setSelected(false);
 		}
 		myBars.get(theCurrentBar).setSelected(true);
@@ -113,13 +139,9 @@ public class Visualizer extends JPanel {
 		shuffle();
 	}
 	
-	private class TimeListener implements ActionListener {
-        public void actionPerformed(final ActionEvent theEvent) {    	
-        	mySorter.sort();
-        	myComparisons++;
-        	update();
-            revalidate();
-        }
-    }
-	
+	public void sortingDone() {
+		stop();
+		myIntegerForSortedAnimation = 0;
+		myTimerForSortedAnimation.start();
+	}
 }

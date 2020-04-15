@@ -6,7 +6,9 @@ public abstract class Sorter {
 
 	Visualizer myVisualizer;
 	
-	String myName;
+	String myName = "MUST ADD SORTER NAME";
+	
+	Boolean isSorted = false;
 	
 	public Sorter(Visualizer theVisualizer) {
 		myVisualizer = theVisualizer;
