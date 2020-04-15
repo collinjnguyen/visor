@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JLabel;
 
-public class Bar extends JLabel {
+public class Bar extends JLabel implements Comparable<Bar> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -59,6 +59,11 @@ public class Bar extends JLabel {
 		} else {
 			setBackground(Color.BLACK);
 		}
+	}
+
+	@Override
+	public int compareTo(Bar o) {
+		return ((Integer) this.getValue()).compareTo(o.getValue());
 	}
 
 }

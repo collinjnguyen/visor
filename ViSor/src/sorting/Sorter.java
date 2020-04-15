@@ -1,6 +1,9 @@
 package sorting;
 
+import java.util.ArrayList;
+
 import gui.Visualizer;
+import utilities.Bar;
 
 public abstract class Sorter {
 
@@ -10,8 +13,14 @@ public abstract class Sorter {
 	
 	Boolean isSorted = false;
 	
+	int myNumberOfValues;
+	
+	ArrayList<Bar> myBars;
+	
 	public Sorter(Visualizer theVisualizer) {
 		myVisualizer = theVisualizer;
+		myNumberOfValues = myVisualizer.getMyBars().size();
+		myBars = myVisualizer.getMyBars();
 	}
 	
 	public abstract void sort();

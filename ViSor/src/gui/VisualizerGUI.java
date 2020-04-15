@@ -22,6 +22,7 @@ import javax.swing.event.ChangeListener;
 
 import sorting.BogoSorter;
 import sorting.BubbleSorter;
+import sorting.SelectionSorter;
 import sorting.Sorter;
 
 public class VisualizerGUI extends JFrame {
@@ -178,8 +179,12 @@ public class VisualizerGUI extends JFrame {
 	}
 	
 	private void generateSorters() {
+		
+		// Add new sorters here
 		mySorterBox.addItem(new BubbleSorter(myVisualizer));
 		mySorterBox.addItem(new BogoSorter(myVisualizer));
+		mySorterBox.addItem(new SelectionSorter(myVisualizer));
+		
 		mySorterBox.addActionListener(new ActionListener() {
 			 
 		    @Override
