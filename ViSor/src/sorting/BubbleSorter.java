@@ -10,12 +10,9 @@ public class BubbleSorter extends Sorter {
 	
 	private int j;
 	
-	private final Visualizer myVisualizer;
-	
 	public BubbleSorter(Visualizer theVisualizer) {
-		i = 0;
-		j = 0;
-		myVisualizer = theVisualizer;
+		super(theVisualizer);
+		myName = "Bubble Sort";
 	}
 	
 	@Override

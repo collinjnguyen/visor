@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,16 +23,21 @@ public class Visualizer extends JPanel {
 	
 	private final Timer myTimer;
 	
-	private final int myTimerDelay = 2;
+	private int myTimerDelay = 2;
 	
 	private final int myNumberOfValues = 200;
 	
 	private Sorter mySorter;
 	
 	private int myComparisons = 0;
+	
+	private int myMaxSpeed = 10;
+	
+	private boolean isRunning = false;
 		
 	public Visualizer() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setBackground(Color.WHITE);
 		myBars = new ArrayList<>();
 		
 		makeBars();
@@ -59,10 +65,12 @@ public class Visualizer extends JPanel {
 	
 	public void start() {
 		myTimer.start();
+		isRunning = true;
 	}
 	
 	public void stop() {
 		myTimer.stop();
+		isRunning = false;
 	}
 	
 	public void step() {
@@ -79,7 +87,7 @@ public class Visualizer extends JPanel {
 		revalidate();
 	}
 	
-	public void showSelectedValue(int theCurrentBar) {
+	public void showSelectedValue(final int theCurrentBar) {
 		for(Bar b : myBars) {
 			b.setSelected(false);
 		}
@@ -89,6 +97,20 @@ public class Visualizer extends JPanel {
 	
 	public ArrayList<Bar> getMyBars() {
 		return myBars;
+	}
+	
+	public void setSpeed(final int theSpeed) {
+		int speedToDelay = (myMaxSpeed - theSpeed) * 10;
+		myTimer.setDelay(speedToDelay);
+	}
+	
+	public boolean getStatus() {
+		return isRunning;
+	}
+	
+	public void setSorter(final Sorter theSorter) {
+		mySorter = theSorter;
+		shuffle();
 	}
 	
 	private class TimeListener implements ActionListener {
