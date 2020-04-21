@@ -121,6 +121,16 @@ public class Visualizer extends JPanel {
 		repaint();
 	}
 	
+	public void showSelectedValues(final ArrayList<Integer> theCurrentBars) {
+		for (Bar b : myBars) {
+			b.setSelected(false);
+		}
+		for (Integer i : theCurrentBars) {
+			myBars.get(i).setSelected(true);
+		}
+		repaint();
+	}
+	
 	public ArrayList<Bar> getMyBars() {
 		return myBars;
 	}

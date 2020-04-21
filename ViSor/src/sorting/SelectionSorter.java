@@ -1,5 +1,6 @@
 package sorting;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import gui.Visualizer;
@@ -11,6 +12,8 @@ public class SelectionSorter extends Sorter {
 	private int j = 0;
 	
 	private int min = 0;
+	
+	private ArrayList<Integer> mySelectedValues = new ArrayList<>();
 	
 	public SelectionSorter(Visualizer theVisualizer) {
 		super(theVisualizer);
@@ -33,20 +36,37 @@ public class SelectionSorter extends Sorter {
 //            arr[min_idx] = arr[i]; 
 //            arr[i] = temp; 
 //        } 
-		if (j == myNumberOfValues - 1) {
+		
+//		if (j == myNumberOfValues - 1) {
+//			Collections.swap(myBars, min, i);
+//    		j = i + 1;
+//    		i++;
+//    		min = i;
+//    	} else {
+//    		if (myBars.get(j).compareTo(myBars.get(min)) == -1) {
+//    			min = j;
+//    		}
+//    		j++;
+//    	}
+		
+		if (myBars.get(j).compareTo(myBars.get(min)) == -1) {
+			min = j;
+		}
+		j++;
+		
+		if (j == myNumberOfValues) {
 			Collections.swap(myBars, min, i);
-    		j = 0;
+    		j = i + 1;
     		i++;
     		min = i;
-    	} else {
-    		j = i + 1;
-    		if (myBars.get(j).compareTo(myBars.get(min)) == -1) {
-    			min = j;
-    		}
-    		j++;
-    	}
-		myVisualizer.showSelectedValue(j);
+		}
+		
+		mySelectedValues.clear();
+		mySelectedValues.add(j);
+		mySelectedValues.add(min);
+		myVisualizer.showSelectedValues(mySelectedValues);
 		if (i == myNumberOfValues - 2) {
+			Collections.swap(myBars, myBars.size() - 1, myBars.size() - 2);
 			isSorted = true;
 			myVisualizer.sortingDone();
 		}
